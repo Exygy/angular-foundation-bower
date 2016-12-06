@@ -1041,20 +1041,24 @@ angular.module('mm.foundation.modal', ['mm.foundation.transition'])
         // Closing animation
         scope.animate = false;
 
-        var transitionEndEventName = $transition.transitionEndEventName;
-        if (transitionEndEventName) {
-          // transition out
-          var timeout = $timeout(afterAnimating, emulateTime);
+        // var transitionEndEventName = $transition.transitionEndEventName;
+        // if (transitionEndEventName) {
+        //   // transition out
+        //   var timeout = $timeout(afterAnimating, emulateTime);
 
-          domEl.bind(transitionEndEventName, function () {
-            $timeout.cancel(timeout);
-            afterAnimating();
-            scope.$apply();
-          });
-        } else {
-          // Ensure this call is async
-          $timeout(afterAnimating, 0);
-        }
+        //   domEl.bind(transitionEndEventName, function () {
+        //     $timeout.cancel(timeout);
+        //     afterAnimating();
+        //     scope.$apply();
+        //   });
+        // } else {
+        //   // Ensure this call is async
+        //   $timeout(afterAnimating, 0);
+        // }
+
+        // Call directly, rather than with a timeout to prevent bug
+        // in iOS that locks up screen
+        afterAnimating();
 
         function afterAnimating() {
           if (afterAnimating.done) {
